@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "name": "petsc1",
+            "includePath": [
+                "/workspace-gen1b/**",
+                "/home/petsc/lib/petsc/conf/",
+                "/home/petsc/include/",
+                "/home/petsc/arch-linux-c-debug/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/mpicc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerArgs": [
+                "-Wall",
+                "-Wwrite-strings",
+                "-Wno-unknown-pragmas",
+                "-Wno-lto-type-mismatch",
+                "-Wno-stringop-overflow",
+                "-fstack-protector",
+                "-fvisibility=hidden",
+                "-g3",
+                "-O0"
+            ],
+            "mergeConfigurations": false,
+            "browse": {
+                "path": [
+                    "/workspace-gen1b/**",
+                    "/workspace-gen1b"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}

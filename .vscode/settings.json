@@ -1,0 +1,12 @@
+{
+    "files.eol": "\n",
+    // latex
+    "files.associations": {
+        "*.tex": "latex",
+        "stdio.h": "c",
+        "math.h": "c"
+    },
+    "files.autoSave": "onFocusChange",
+    "autoDocstring.docstringFormat": "numpy",
+    "workbench.editor.enablePreview": false,
+}

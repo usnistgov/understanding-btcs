@@ -1,0 +1,17 @@
+
+# python3
+__pycache__/
+venv/
+
+.idea/workspace.xml
+
+# movies
+*.mp4
+
+# C/C++
+*.exe
+*.o
+*.so
+
+# docs
+doc/
