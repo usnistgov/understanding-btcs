@@ -8,7 +8,7 @@ results associated with Ref. [1].
 # Installation
 
 The library dependencies can be installed with [Docker](https://www.docker.com)
-using the [Dockerfile](./devcontainer/Dockerfile).
+using the [Dockerfile](.devcontainer/Dockerfile).
 One option is to install [Docker Desktop](https://www.docker.com/products/docker-desktop)
 and open the folder with [Visual Studio Code](https://code.visualstudio.com).
 
