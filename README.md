@@ -45,8 +45,10 @@ The documentation generated can be viewed by then opening
 
 # Citing This Work
 
-To cite the manuscript, use Ref. [1].
+To cite the manuscript, use Ref. [1]. To cite the software or experimental data, use Ref. [2].
 
 ## References
 
   1. DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Break-through-curve Measurements, *Under Review*, 2023.
+
+  2. De Jaco, R. F. Sofware and Data Associated with "DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Breakthrough-curve Measurements." National Institute of Standards and Technology, 2023, [doi: 10.18434/mds2-3103](https://doi.org/10.18434/mds2-3103).
