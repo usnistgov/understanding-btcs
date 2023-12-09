@@ -63,7 +63,7 @@ class AsymptoticConvergence:
             slope, intercept, r, p, stderr = linregress(np.log(self.es), np.log(btc_error))
             eps_line = np.linspace(self.es.min(), self.es.max())
             slope_error = calculate_slope_error(np.log(self.es), np.log(btc_error), slope, intercept)
-            label = "slope $\\approx%3.2f_{%3.2f}$" % (slope, slope_error)
+            label = "$r \\approx%3.2f_{%3.2f}$" % (slope, slope_error)
             if 'label' not in line_kwargs.keys():
                 ax.annotate(label, xy=(0.05, 0.05), xycoords="axes fraction", color=line_kwargs['color'])
             else:
