@@ -17,8 +17,8 @@ def get_u_TW_Langmuir(xi):
     xi[xi < -10] = -10
     xi[xi > 10] = 10
 
-    B = np.sqrt(2) - 1
-    A = B*np.exp(2*xi)
+    P = np.sqrt(2) - 1
+    A = P*np.exp(2*xi)
     return 1 + A - np.sqrt(A*(2 + A))
 
 
@@ -42,7 +42,7 @@ class TWConvergence(AsymptoticConvergence):
             ax.plot(taus, u_asympt, '--', color=self.colors[i], linewidth=0.8)
         
         ax.set_xlabel("$\\tau_{j}$")
-        ax.set_ylabel("$W_{n-1}^j$ or $\\bar{U}_{n-1}^j$")
+        ax.set_ylabel("$W_{N}^j$ or $\\bar{U}_{N}^j$")
 
 
 if __name__ == '__main__':
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     
     plt.setp(axes[1].get_yticklabels(), visible=False)
     # axes[0].legend(facecolor='inherit', frameon=False)
-    axes[1].set_ylabel(r"$\max\limits_{j\in\mathcal{J}}\quad \left\lvert W_{N}^j - \bar{U}_{N}^j\right\rvert$")
+    axes[1].set_ylabel("$\\overline{\\mathcal{E}}_N$", rotation=0., labelpad=12)
     for i in range(tw.es.shape[0]):
         axes[0].annotate("$\\varepsilon = %3.2f$" % tw.es[i], 
         xy=(0.03, 0.4 + 0.1*i), xycoords="axes fraction", color=tw.colors[i])
