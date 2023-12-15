@@ -59,11 +59,12 @@ class AsymptoticConvergence:
             btc_error.append(error)
 
         ax.loglog(self.es, btc_error, **plot_kwargs)
+        slope, intercept, r, p, stderr = linregress(np.log(self.es), np.log(btc_error))
+        eps_line = np.linspace(self.es.min(), self.es.max())
+        slope_error = calculate_slope_error(np.log(self.es), np.log(btc_error), slope, intercept)
+        print(slope, slope_error)
         if line_kwargs is not None:
-            slope, intercept, r, p, stderr = linregress(np.log(self.es), np.log(btc_error))
-            eps_line = np.linspace(self.es.min(), self.es.max())
-            slope_error = calculate_slope_error(np.log(self.es), np.log(btc_error), slope, intercept)
-            label = "$r \\approx%3.2f_{%3.2f}$" % (slope, slope_error)
+            label = "$a \\approx%3.2f_{%3.2f}$" % (slope, slope_error)
             if 'label' not in line_kwargs.keys():
                 ax.annotate(label, xy=(0.05, 0.05), xycoords="axes fraction", color=line_kwargs['color'])
             else:
