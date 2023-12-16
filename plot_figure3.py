@@ -1,4 +1,4 @@
-from plot_figure2_figureS1 import AsymptoticConvergence
+from plot_figure2_figureS1 import AsymptoticConvergence, calculate_slope_error
 from src.plotting_util import save_figure
 import os
 from src.isotherms import Langmuir
@@ -43,6 +43,32 @@ class TWConvergence(AsymptoticConvergence):
         
         ax.set_xlabel("$\\tau_{j}$")
         ax.set_ylabel("$W_{N}^j$ or $\\bar{U}_{N}^j$")
+    
+    def plot_error(self, ax, plot_kwargs, line_kwargs=None):
+        btc_error = []
+        for i in range(len(self.es)):
+            btc = np.loadtxt(self.file_prefix + "%3.2f.dat" % self.es[i], skiprows=2)
+            m = btc.shape[0]
+            taus = np.array([j * self.tau_star/(m-1) for j in range(m)])
+            u_asympt = self.get_other_theory(1., taus + 1, self.es[i])
+            error = np.max(np.abs(btc - u_asympt))
+            btc_error.append(error)
+
+        ax.semilogx(self.es, btc_error, **plot_kwargs)
+        slope, intercept, r, p, stderr = linregress(np.log(self.es), np.log(btc_error))
+        eps_line = np.linspace(self.es.min(), self.es.max())
+        slope_error = calculate_slope_error(np.log(self.es), np.log(btc_error), slope, intercept)
+        ax.grid()
+        if line_kwargs is not None:
+            label = "$a \\approx%3.2f_{%3.2f}$" % (slope, slope_error)
+            if 'label' not in line_kwargs.keys():
+                ax.annotate(label, xy=(0.05, 0.05), xycoords="axes fraction", color=line_kwargs['color'])
+            else:
+                line_kwargs['label'] += ', ' + label
+            ax.loglog(eps_line, eps_line**slope * np.exp(intercept), **line_kwargs)
+
+        ax.set_xlabel("$\\varepsilon$")
+        ax.set_ylabel(r"$\max\limits_{j\in\mathcal{J}}\quad \left\lvert W_{N}^j - \bar{C}_{N}^j\right\rvert$")
 
 
 if __name__ == '__main__':
@@ -52,7 +78,7 @@ if __name__ == '__main__':
     width = 0.33
     axes = [
         fig.add_axes([0.1, bot1, 0.5 - 0.1, top-bot1]),
-        fig.add_axes([0.5 + 0.18, bot1, 0.5 - 0.18-.01, top-bot1])
+        fig.add_axes([0.45 + 0.18, bot1, 0.55 - 0.18-.01, top-bot1])
     ]
 
     tw = TWConvergence(ISOTHERM, "out/shock-", 2.)
@@ -69,7 +95,7 @@ if __name__ == '__main__':
         axes[i].grid()
     
     
-    plt.setp(axes[1].get_yticklabels(), visible=False)
+    # plt.setp(axes[1].get_yticklabels(), visible=False)
     # axes[0].legend(facecolor='inherit', frameon=False)
     axes[1].set_ylabel("$\\overline{\\mathcal{E}}_N$", rotation=0., labelpad=12)
     for i in range(tw.es.shape[0]):
