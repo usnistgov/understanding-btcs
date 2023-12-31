@@ -1,6 +1,5 @@
 from src.isotherms import Langmuir
 from src.plotting_util import save_figure
-import os
 import numpy as np
 import matplotlib.pyplot as plt
 plt.rcParams.update({
@@ -36,7 +35,7 @@ def main():
     c = np.linspace(0, 1)
     for ax, iso, i in ((ax_iso1, iso1, 0), (ax_iso2, iso2, 1), (ax_iso3, iso3, 2)):
         ax.plot(
-            c, iso.f(c), '-', color="C%i" % i
+            c, iso.F(c), '-', color="C%i" % i
         )
         ax.plot(c, c, '--', color='grey')
         ax.set_ylabel("$F=L\\left(c; %2.f\\right)$" % iso.k)

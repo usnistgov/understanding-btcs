@@ -1,5 +1,4 @@
-from plot_figureS1 import Spatial, Temporal
-from src.plotting_util import save_figure
+from src.plotting_util import save_figure, Spatial, Temporal
 import matplotlib.pyplot as plt
 import os
 plt.rcParams.update({
