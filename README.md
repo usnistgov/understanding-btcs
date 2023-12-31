@@ -130,13 +130,6 @@ python3 plot_figure5.py
 
 # Documentation
 A pdf version of the manual can be found at [doc/manual.pdf](doc/manual.pdf).
-To obtain an html version of the documentation, use 
-
-```bash
-doxygen Doxyfile
-```
-
-in the main directory, and open [./doc/html/index.html](./doc/html/index.html) in a browser.
 
 # Citing This Work
 
