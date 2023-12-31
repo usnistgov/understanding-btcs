@@ -126,7 +126,7 @@ def main():
     axes[2].annotate("$\\kappa=-\\dfrac{1}{2}$", xy=(0.5, 0.4), xycoords="axes fraction", color='C0')
 
     # fig.subplots_adjust(left=0.08, bottom=0.14, right=0.99, top=0.99)
-    save_figure(fig, "figure2.png")
+    save_figure(fig, "figure3.png")
 
 
 def si():
@@ -152,7 +152,7 @@ def si():
     ax.set_ylim([0.1, 1])
     ax.grid()
     fig.subplots_adjust(left=0.2, top=0.97, right=0.97)
-    save_figure(fig, "figureS1.png")
+    save_figure(fig, "figureS3.png")
 
 
 

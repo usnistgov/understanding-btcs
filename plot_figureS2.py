@@ -1,4 +1,5 @@
 from plot_figure1 import Spatial, Temporal
+from src.plotting_util import save_figure
 import matplotlib.pyplot as plt
 import os
 plt.rcParams.update({
@@ -71,4 +72,4 @@ if __name__ == '__main__':
         a.spines['top'].set_visible(False)
         a.spines['right'].set_visible(False)
     fig.subplots_adjust(bottom=0.2, right=0.99, wspace=0.28, left=0.11)
-    fig.savefig('refinement.png', dpi=300, transparent=True)
+    save_figure(fig, "figureS2.png")

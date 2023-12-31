@@ -1,4 +1,4 @@
-FROM rfd1/cms1:latest
+FROM rfd1/cms1-latex:latest
 
 USER root
 

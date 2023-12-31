@@ -1,104 +1,106 @@
-from src.isotherms import Langmuir
+from plot_figure2_figureS1 import AsymptoticConvergence, calculate_slope_error
 from src.plotting_util import save_figure
 import os
+from src.isotherms import Langmuir
+from scipy.stats import linregress
 import numpy as np
 import matplotlib.pyplot as plt
 plt.rcParams.update({
     "text.usetex": True,
     "font.family": "Helvetica"
 })
+plt.rc("text.latex", preamble="\\usepackage{amsmath} \\usepackage{amsfonts}")
+
+ISOTHERM = Langmuir(1)
+
+def get_u_TW_Langmuir(xi):
+    xi[xi < -10] = -10
+    xi[xi > 10] = 10
+
+    P = np.sqrt(2) - 1
+    A = P*np.exp(2*xi)
+    return 1 + A - np.sqrt(A*(2 + A))
 
 
-def main():
-    e = 1/6
-    tau_star = 0.6
-    m = 2**13 + 1
-    n = 2**13 + 1
-    x = np.array([
-        i/(n - 1) for i in range(n)
-    ])
-    tau = np.array([
-        j*tau_star/(m - 1) for j in range(m)
-    ])
-    iso3, iso2, iso1 = Langmuir(1), Langmuir(6), Langmuir(36)
+class TWConvergence(AsymptoticConvergence):
+    def __init__(self, isotherm: Langmuir, file_prefix, tau_star):
+        AsymptoticConvergence.__init__(self, isotherm, file_prefix, tau_star)
+    
+    def get_other_theory(self, x, t, eps):
+        return get_u_TW_Langmuir((x - ISOTHERM.shock_lambda()*t)/eps)
 
-    fig = plt.figure(figsize=(5.512, 4.))
-    left1 = 0.105
-    bottom = 0.11
-    spacing = 0.03
-    top = 0.98
-    height = (top - bottom - 2*spacing) / 3
+    def plot_btcs(self, ax):
 
-    isowidth = height
-    ax_iso1 = fig.add_axes([left1, bottom, isowidth, height])
-    ax_iso2 = fig.add_axes([left1, bottom + height + spacing, isowidth, height])
-    ax_iso3 = fig.add_axes([left1, bottom + 2*height + 2*spacing, isowidth, height])
-    c = np.linspace(0, 1)
-    for ax, iso, i in ((ax_iso1, iso1, 0), (ax_iso2, iso2, 1), (ax_iso3, iso3, 2)):
-        ax.plot(
-            c, iso.f(c), '-', color="C%i" % i
-        )
-        ax.plot(c, c, '--', color='grey')
-        ax.set_ylabel("$F=L\\left(c; %2.f\\right)$" % iso.k)
-        if i == 0:
-            ax.set_xlabel("$c$")
-        else:
-            plt.setp(ax.get_xticklabels(), visible=False)
+        taus = np.linspace(0., self.tau_star, 10000)
+        for i in range(self.es.shape[0]-1, -1, -1):
+            btc = np.loadtxt(self.file_prefix + "%3.2f.dat" % self.es[i], skiprows=2)
+            m = btc.shape[0]
+            taus = np.array([j * self.tau_star/(m-1) for j in range(m)])
+            ax.plot(taus, btc, '-', label="$\\varepsilon = %3.2f$" % self.es[i], 
+                    color=self.colors[i])
+            u_asympt = self.get_other_theory(1, taus+1, self.es[i])
+            ax.plot(taus, u_asympt, '--', color=self.colors[i], linewidth=0.8)
+        
+        ax.set_xlabel("$\\tau_{j}$")
+        ax.set_ylabel("$W_{N}^j$ or $\\bar{U}_{N}^j$")
+    
+    def plot_error(self, ax, plot_kwargs, line_kwargs=None):
+        btc_error = []
+        for i in range(len(self.es)):
+            btc = np.loadtxt(self.file_prefix + "%3.2f.dat" % self.es[i], skiprows=2)
+            m = btc.shape[0]
+            taus = np.array([j * self.tau_star/(m-1) for j in range(m)])
+            u_asympt = self.get_other_theory(1., taus + 1, self.es[i])
+            error = np.max(np.abs(btc - u_asympt))
+            btc_error.append(error)
 
-    right = 0.85
-    left2 = 0.1
-    xstart = left1 + isowidth + left2
-    moviewidth = right - xstart
-    ax_movie1 = fig.add_axes([xstart, bottom, moviewidth, height])
-    ax_movie2 = fig.add_axes([xstart, bottom + height + spacing, moviewidth, height])
-    ax_movie3 = fig.add_axes([xstart, bottom + 2*height + 2*spacing, moviewidth, height])
-
-    ax_legend = fig.add_axes([0.95, bottom, 0.04, top - bottom])
-    ax_legend.tick_params(length=0)
-    ax_legend.set_xticks([])
-    ax_legend.set_xticklabels([])
-
-    # cls1.simulate()
-    # cls2.simulate()
-    # cls3.simulate()
-
-    # make colormap
-    colors = plt.cm.cool(np.linspace(0., 1., m))
-
-    colors_plotted = []
-    T_plotted = []
-    for ax, iso, i in ((ax_movie1, iso1, 0), (ax_movie2, iso2, 1), (ax_movie3, iso3, 2)):
-        for j in range(0, m, m//10):
-            W_j = np.loadtxt("movie-%2.1f/movie-%i.txt" % (iso.k, j), skiprows=2)
-            ax.plot(x/e, W_j, color=colors[j])
-            if i == 0:
-                colors_plotted.append(colors[j])
-                T_plotted.append(tau[j]/e)
-
-        ax.tick_params(axis="y", which='both', direction='in')
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        ax.set_ylabel("$W\\left(x_i,\\tau_j\\right)$")
-        ax.set_ylim([0., 1.])
-        ax.set_yticks([0., 0.2, 0.4, 0.6, 0.8, 1.0])
-        ax.set_xlim([0., 1/e])
+        ax.semilogx(self.es, btc_error, **plot_kwargs)
+        slope, intercept, r, p, stderr = linregress(np.log(self.es), np.log(btc_error))
+        eps_line = np.linspace(self.es.min(), self.es.max())
+        slope_error = calculate_slope_error(np.log(self.es), np.log(btc_error), slope, intercept)
         ax.grid()
-        if i == 0:
-            ax.set_xlabel("$x_i/\\varepsilon$")
-        else:
-            plt.setp(ax.get_xticklabels(), visible=False)
+        if line_kwargs is not None:
+            label = "$a \\approx%3.2f_{%3.2f}$" % (slope, slope_error)
+            if 'label' not in line_kwargs.keys():
+                ax.annotate(label, xy=(0.05, 0.05), xycoords="axes fraction", color=line_kwargs['color'])
+            else:
+                line_kwargs['label'] += ', ' + label
+            ax.loglog(eps_line, eps_line**slope * np.exp(intercept), **line_kwargs)
 
-    for k in range(len(T_plotted)): 
-        ax_legend.plot([0, 1], [T_plotted[k], T_plotted[k]], '-', color=colors_plotted[k], clip_on=False)
-
-    ax_legend.set_ylabel("$\\tau_j/\\varepsilon$")
-    ax_legend.set_yticks(T_plotted)
-    ax_legend.set_ylim([np.min(T_plotted), np.max(T_plotted)])
-    ax_legend.spines['top'].set_visible(False)
-    ax_legend.spines['bottom'].set_visible(False)
-    ax_legend.spines['right'].set_visible(False)
-    save_figure(fig, "figure4.png")
+        ax.set_xlabel("$\\varepsilon$")
+        ax.set_ylabel(r"$\max\limits_{j\in\mathcal{J}}\quad \left\lvert W_{N}^j - \bar{C}_{N}^j\right\rvert$")
 
 
 if __name__ == '__main__':
-    main()
+    fig = plt.figure(figsize=(5.5, 2.), dpi=300)
+    top = 0.96
+    bot1 = 0.2
+    width = 0.33
+    axes = [
+        fig.add_axes([0.1, bot1, 0.5 - 0.1, top-bot1]),
+        fig.add_axes([0.45 + 0.18, bot1, 0.55 - 0.18-.01, top-bot1])
+    ]
+
+    tw = TWConvergence(ISOTHERM, "out/shock-", 2.)
+
+    tw.plot_btcs(axes[0])
+    tw.plot_error(
+        axes[1], 
+        dict(marker='d', color='black', ls='None', mfc='None', clip_on=False), 
+    )
+    for i in range(2):
+        axes[i].tick_params(which='both', direction='in')
+        axes[i].spines['top'].set_visible(False)
+        axes[i].spines['right'].set_visible(False)
+        axes[i].grid()
+    
+    
+    # plt.setp(axes[1].get_yticklabels(), visible=False)
+    # axes[0].legend(facecolor='inherit', frameon=False)
+    axes[1].set_ylabel("$\\overline{\\mathcal{E}}_N$", rotation=0., labelpad=12)
+    for i in range(tw.es.shape[0]):
+        axes[0].annotate("$\\varepsilon = %3.2f$" % tw.es[i], 
+        xy=(0.03, 0.4 + 0.1*i), xycoords="axes fraction", color=tw.colors[i])
+    
+    # fig.subplots_adjust(left=0.14, bottom=0.14, right=0.99, top=0.99)
+    save_figure(fig, "figure4.png")

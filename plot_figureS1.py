@@ -132,4 +132,4 @@ if __name__ == '__main__':
     fig.subplots_adjust(bottom=0.17, right=0.97, top=0.95, wspace=0.2, left=0.14)
     for axes in ax:
         axes.set_xlim([0.01, 1])
-    save_figure(fig, "figure1.png")
+    save_figure(fig, "figureS1.png")

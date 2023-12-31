@@ -3,7 +3,7 @@
         {
             "name": "petsc1",
             "includePath": [
-                "/workspace-gen1b/**",
+                "/workspace-btc-cnsns/**",
                 "/home/petsc/lib/petsc/conf/",
                 "/home/petsc/include/",
                 "/home/petsc/arch-linux-c-debug/include"
@@ -27,8 +27,8 @@
             "mergeConfigurations": false,
             "browse": {
                 "path": [
-                    "/workspace-gen1b/**",
-                    "/workspace-gen1b"
+                    "/workspace-btc-cnsns/**",
+                    "/workspace-btc-cnsns"
                 ],
                 "limitSymbolsToIncludedHeaders": true
             }
