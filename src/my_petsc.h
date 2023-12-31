@@ -152,7 +152,7 @@ extern PetscErrorCode UpdateIsotherm(
 extern PetscReal eval_S_i_j(
     PetscReal f_j /**< value of adsorption isotherm at i and j*/, 
     PetscReal f_jm1 /**< value of adsorption isotherm at i but j - 1*/, 
-    PetscReal exp_mdT /**< value for \f$e^{-\Delta \tau/\varpepsilon}\f$ */, 
+    PetscReal exp_mdT /**< value for \f$e^{-\Delta \tau/\varepsilon}\f$ */, 
     PetscReal S_jm1 /**< Value for solid concentration at i but j - 1*/, 
     PetscReal dT /**< value for \f$\Delta \tau / \varepsilon\f$ */);
 
