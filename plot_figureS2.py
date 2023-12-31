@@ -1,4 +1,4 @@
-from plot_figure1 import Spatial, Temporal
+from plot_figureS1 import Spatial, Temporal
 from src.plotting_util import save_figure
 import matplotlib.pyplot as plt
 import os

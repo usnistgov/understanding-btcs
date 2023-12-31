@@ -1,4 +1,4 @@
-from plot_figure2_figureS1 import AsymptoticConvergence, calculate_slope_error
+from plot_figure3_figureS3 import AsymptoticConvergence, calculate_slope_error
 from src.plotting_util import save_figure
 import os
 from src.isotherms import Langmuir
