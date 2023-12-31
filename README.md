@@ -2,17 +2,48 @@
 
 The purpose of this code and data is to enable reproduction
 and facilitate extension of the computational
-results associated with Ref. [1].
+results associated with Ref. [1],
+as found in [Citing This Work](#citing-this-work).
 
 
-# Installation
+# Installation of dependencies
 
-The library dependencies can be installed with [Docker](https://www.docker.com)
-using the [Dockerfile](.devcontainer/Dockerfile).
-One option is to install [Docker Desktop](https://www.docker.com/products/docker-desktop)
-and open the folder with [Visual Studio Code](https://code.visualstudio.com).
-Then re-open the folder in a container using the configuration
-file provided.
+The container used in this work can be obtained using
+
+```bash
+docker pull rfd1/understanding-btcs:final
+```
+
+This requires [Docker](https://www.docker.com).
+
+For users without previous Docker experience, we recommend the following steps
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop).
+
+2. Install [Visual Studio Code](https://code.visualstudio.com).
+
+3. Start the Docker Desktop application.
+
+4. Open Visual Studio Code and install the *Dev Containers extension*.
+
+5. With the Dev Containers extension installed, you will see the (green) new status bar at the bottom left 
+
+![](doc/remote-status-bar.png)
+
+6. Click on the green status bar and then open this folder in a container.
+
+# Documentation
+A pdf version of the manual can be found at [doc/manual.pdf](doc/manual.pdf).
+
+# Citing This Work
+
+To cite the manuscript, use Ref. [1]. To cite the software or data generated, use Ref. [2].
+
+## References
+
+  1. DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Single-Solute Breakthrough Curves, *Communications in Nonlinear Science and Numerical Simulation*, 2023, [doi: 10.1016/j.cnsns.2023.107794](https://doi.org/10.1016/j.cnsns.2023.107794).
+
+  2. De Jaco, R. F. Sofware and Data Associated with "DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Breakthrough-curve Measurements." National Institute of Standards and Technology, 2023, [doi: 10.18434/mds2-3103](https://doi.org/10.18434/mds2-3103).
 
 # Reproducing the Manuscript
 
@@ -127,16 +158,3 @@ The figure is generated via
 ```bash
 python3 plot_figure5.py
 ```
-
-# Documentation
-A pdf version of the manual can be found at [doc/manual.pdf](doc/manual.pdf).
-
-# Citing This Work
-
-To cite the manuscript, use Ref. [1]. To cite the software or experimental data, use Ref. [2].
-
-## References
-
-  1. DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Single-Solute Breakthrough Curves, *Communications in Nonlinear Science and Numerical Simulation*, 2023, [doi: 10.1016/j.cnsns.2023.107794](https://doi.org/10.1016/j.cnsns.2023.107794).
-
-  2. De Jaco, R. F. Sofware and Data Associated with "DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Breakthrough-curve Measurements." National Institute of Standards and Technology, 2023, [doi: 10.18434/mds2-3103](https://doi.org/10.18434/mds2-3103).
