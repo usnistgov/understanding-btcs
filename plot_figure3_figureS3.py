@@ -9,9 +9,9 @@ plt.rc("text.latex", preamble="\\usepackage{amsmath} \\usepackage{amsfonts}")
 
 
 def main():
-    fig = plt.figure(figsize=(5.512, 2.), dpi=300)
-    top = 0.97
-    bot1 = 0.2
+    fig = plt.figure(figsize=(5.512, 2.5), dpi=300)
+    top = 0.82
+    bot1 = 0.15
     left = 0.1
     space=0.02
     width = 0.33
@@ -56,6 +56,7 @@ def main():
     axes[2].annotate("$\\kappa=1$", xy=(0.2, 0.8), xycoords="axes fraction", color='C1')
     axes[2].annotate("$\\kappa=-\\dfrac{1}{2}$", xy=(0.5, 0.4), xycoords="axes fraction", color='C0')
 
+    fig.suptitle('With decreasing $\\varepsilon$, numerical breakthrough concentrations\n approach rarefaction wave, but not shock wave.')
     save_figure(fig, "figure3.png")
 
 

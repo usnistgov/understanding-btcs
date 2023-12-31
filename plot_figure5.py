@@ -21,11 +21,11 @@ def main():
     ])
     iso3, iso2, iso1 = Langmuir(1), Langmuir(6), Langmuir(36)
 
-    fig = plt.figure(figsize=(5.512, 4.))
+    fig = plt.figure(figsize=(5.512, 5))
     left1 = 0.105
-    bottom = 0.11
+    bottom = 0.09
     spacing = 0.03
-    top = 0.98
+    top = 0.94
     height = (top - bottom - 2*spacing) / 3
 
     isowidth = height
@@ -96,6 +96,7 @@ def main():
     ax_legend.spines['top'].set_visible(False)
     ax_legend.spines['bottom'].set_visible(False)
     ax_legend.spines['right'].set_visible(False)
+    fig.suptitle("Formation of boundary layer")
     save_figure(fig, "figure5.png")
 
 

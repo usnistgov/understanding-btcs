@@ -1,4 +1,4 @@
-from src.plotting_util import save_figure, TWConvergence
+from src.plotting_util import save_figure, TWConvergence, ISOTHERM
 import matplotlib.pyplot as plt
 plt.rcParams.update({
     "text.usetex": True,
@@ -8,9 +8,9 @@ plt.rc("text.latex", preamble="\\usepackage{amsmath} \\usepackage{amsfonts}")
 
 
 if __name__ == '__main__':
-    fig = plt.figure(figsize=(5.5, 2.), dpi=300)
-    top = 0.96
-    bot1 = 0.2
+    fig = plt.figure(figsize=(5.512, 2.5), dpi=300)
+    top = 0.82
+    bot1 = 0.15
     width = 0.33
     axes = [
         fig.add_axes([0.1, bot1, 0.5 - 0.1, top-bot1]),
@@ -35,4 +35,5 @@ if __name__ == '__main__':
         axes[0].annotate("$\\varepsilon = %3.2f$" % tw.es[i], 
         xy=(0.03, 0.4 + 0.1*i), xycoords="axes fraction", color=tw.colors[i])
     
+    fig.suptitle("Numerical breakthrough concentrations approach boundary-layer theory\n as $\\varepsilon$ decreases, but only when $\\varepsilon$ is sufficiently large")
     save_figure(fig, "figure4.png")

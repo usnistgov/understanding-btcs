@@ -51,24 +51,25 @@ def plot_temporal(ax):
 
 if __name__ == '__main__':
     import os
-    fig, ax = plt.subplots(ncols=2, figsize=(5.51181, 2.))
+    fig, ax = plt.subplots(ncols=2, figsize=(6.5, 6.))
     plot_spatial(ax[0])
     plot_temporal(ax[1])
     ax[0].set_ylabel("$E_{\\chi,\\varphi}$", labelpad=0)
     ax[1].set_ylabel("$E^{\\tau,\\varphi}$", labelpad=0)
-    leg = ax[0].legend(loc=(0.01, 0.62), frameon=False, edgecolor='None', facecolor='inherit', handlelength=0.7, handletextpad=0.2, fontsize="small")
+    leg = ax[0].legend(frameon=False, edgecolor='None', facecolor='inherit')
     texts = list(leg.get_texts())
     texts[0].set_color(colors[4])
     texts[1].set_color(colors[5])
     texts[2].set_color(colors[6])
     ax[0].set_xlabel("$\\Delta \\chi = 1/N$", labelpad=0)
     ax[1].set_xlabel("$\\Delta \\tau = \\tau_{\\star}/M$", labelpad=0)
-    leg = ax[1].legend(loc=(-1.5, 1.), ncols=7, handletextpad=0.1, columnspacing = 0.1, frameon=False, edgecolor='None', facecolor='inherit')
+    leg = ax[1].legend(frameon=False, edgecolor='None', facecolor='inherit')
     for text, c in zip(leg.get_texts(), colors):
         text.set_color(c)
     for a in (ax[0], ax[1]):
         a.grid()
         a.spines['top'].set_visible(False)
         a.spines['right'].set_visible(False)
-    fig.subplots_adjust(bottom=0.2, right=0.99, wspace=0.28, left=0.11)
+    fig.suptitle("Mesh refinement analyses suggest similar convergence rates\nfor $F=\\dfrac{\\left(1 + \\kappa\\right)\\tilde{c}}{1 + \\kappa \\tilde{c}}, \\qquad -0.8 \\le \kappa \\le 256.$")
+    fig.subplots_adjust(bottom=0.08, right=0.97, top=0.85, wspace=0.2, left=0.14)
     save_figure(fig, "figureS2.png")

@@ -9,7 +9,7 @@ plt.rc("text.latex", preamble="\\usepackage{amsmath} \\usepackage{amsfonts}")
 
 
 def plot_convergence(spatial_file, temporal_file1, temporal_file2, temporal_file3):
-    fig, ax = plt.subplots(ncols=2, figsize=(5.51181, 2.))
+    fig, ax = plt.subplots(ncols=2, figsize=(6.5, 5.))
 
     space = Spatial(spatial_file)
     point_kwargs = dict(marker='o', mfc='None', color='C0', ls='None')
@@ -57,9 +57,10 @@ if __name__ == '__main__':
         "out/spatial.csv", "out/temporal1.csv", 
         "out/temporal2.csv", "out/temporal3.csv", 
     )
-    ax[0].legend(facecolor='None', frameon=False, fontsize='small')
-    ax[1].legend(loc=(0.03, 0.6), facecolor='None', frameon=False, fontsize='small')
-    fig.subplots_adjust(bottom=0.17, right=0.97, top=0.95, wspace=0.2, left=0.14)
+    ax[0].legend(facecolor='None', frameon=False)
+    ax[1].legend(loc=(0.03, 0.75), facecolor='None', frameon=False)
+    fig.suptitle("Numerical experiments suggest\n second-order convergence to analytical solution")
+    fig.subplots_adjust(bottom=0.1, right=0.97, top=0.9, wspace=0.2, left=0.14)
     for axes in ax:
         axes.set_xlim([0.01, 1])
     save_figure(fig, "figureS1.png")
