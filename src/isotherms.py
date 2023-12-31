@@ -26,7 +26,7 @@ class Langmuir:
         """!
         @return \f$L(c; k) = (1 + \kappa)c/(1 + \kappa c)\f$
         """
-        return (1. + self.kappa)*c/(1 + self.kappa*c)
+        return (1. + self.k)*c/(1 + self.k*c)
 
     def F_prime(self, c):
         """!
@@ -52,12 +52,17 @@ class Langmuir:
             return 0.
 
         return 1./self.k*(sqrt((1 + self.k)* x / (t - x)) - 1.)
+
+    def shock_lambda(self):
+        """! speed of shock wave
+        @return float representing speed of shock wave"""
+        return 0.5
     
     def get_c_shock(self, x, t):
         """!
         @return concentration \f$c(x,t)\f$ associated with rarefaction wave
         """
-        lamda = 0.5
+        lamda = self.shock_lambda()
         if x <= lamda*t:
             return 1.
 

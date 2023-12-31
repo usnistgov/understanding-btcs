@@ -1,9 +1,9 @@
 # Overview
 
-The purpose of this code and data is to enable reproduction
+The purpose of this code and data is to enable reproduction (see [Reproducing the manuscript](#reproducing-the-manuscript))
 and facilitate extension of the computational
-results associated with Ref. [1],
-as found in [Citing This Work](#citing-this-work).
+results associated with Ref. [1]
+(see [Citing This Work](#citing-this-work)).
 
 
 # Installation of dependencies
