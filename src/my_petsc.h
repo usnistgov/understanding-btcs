@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef HEADER_FILE
-#define HEADER_FILE
+#ifndef MY_PETSC
+#define MY_PETSC
 
 #include <stdbool.h>
 #include <petsc.h>
@@ -63,12 +63,11 @@ void print_user_params(AppCtx u);
  *
  *  @brief Analytical and numerical variables at time j (and jm1 if analytical)
  *
- *  \todo Change c_j and c_jm1 to a_j and a_jm1 to reflect notation change in paper
  */
 typedef struct {
     VecAndArray W_j;  /*!< Numerical values of fluid concentration at time \f$j\f$*/
-    VecAndArray c_j;  /*!< Analytical values of fluid concentration at time \f$j\f$*/
-    VecAndArray c_jm1;  /*!< Analytical values of fluid concentration at time \f$j-1\f$*/
+    VecAndArray a_j;  /*!< Analytical values of fluid concentration at time \f$j\f$*/
+    VecAndArray a_jm1;  /*!< Analytical values of fluid concentration at time \f$j-1\f$*/
     Vec error; /*!< vector comprising errors (presumably b/t analytical and numerical)*/
 } Variables_j;
 
@@ -129,8 +128,8 @@ extern PetscErrorCode run(
  */
 extern PetscErrorCode UpdateAnalytical(
     DMDALocalInfo *info /**< [in] information about local grid*/, 
-    PetscReal *c_j /**< [in,out] new solution computed */,
-    PetscReal *c_jm1 /**< [in] old solution*/, 
+    PetscReal *a_j /**< [in,out] new solution computed */,
+    PetscReal *a_jm1 /**< [in] old solution*/, 
     AppCtx *user /**< [in] Application context */);
 
 /** @brief Update solid concentration 
@@ -140,6 +139,8 @@ extern PetscErrorCode UpdateSolid(
     PetscReal *W_j /**< [in] Numerical solution of fluid concentration*/, 
     AppCtx *user /**< [in] application context*/);
 
+/*! @brief Update value of adsorption isotherm
+*/
 extern PetscErrorCode UpdateIsotherm(
     DMDALocalInfo *info /**< [in] local information about grid*/, 
     PetscReal *W /**< [in] Solution of PDE at some value of time*/, 
@@ -166,6 +167,7 @@ extern PetscReal eval_dS_i_j(
 
 /** @brief does theta rule for discretization in space
  *  @return value of expression averaged wrt theta, \f$v_i(1-\theta) + v_{i-1}\theta\f$ for some \f$v_i, v_{i-1}\f$
+ *  @note that in paper theta=0.5 is always used
  */
 extern PetscReal theta_rule(
     PetscReal val_i /**< value at spatial index i*/, 
@@ -192,7 +194,7 @@ extern PetscErrorCode FormJacobianLocal(
     AppCtx *user /**< application context*/);
 
 
-/** @brief calculate \f$\omega\f$
+/** @brief calculate parameter to determine if at steady state
  *
  *  Parameter used to determine if simulation is at steady state
  *  @return void

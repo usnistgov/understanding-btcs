@@ -25,13 +25,13 @@ extern "C" double integrate(double T_jm1, double T_j, double z){
 }
 
 extern "C" void update_solution(
-    double *c_j, double *c_jm1, double T_jm1, double T_j, double *X, int n
+    double *a_j, double *a_jm1, double T_jm1, double T_j, double *X, int n
 ){
     int i = 0;
-    c_j[0] = 1;
+    a_j[0] = 1;
     for (i = 1; i < n; i++)
     {
-        c_j[i] = c_jm1[i] \
+        a_j[i] = a_jm1[i] \
                     + exp_I0(T_j, X[i]) \
                     - exp_I0(T_jm1, X[i]) \
                     + integrate(T_jm1, T_j, X[i]);

@@ -31,12 +31,12 @@ PetscErrorCode one_time_step(SNES snes, DMDALocalInfo *p_info, AppCtx *p_user, V
 
     if (p_user -> compute_analytical)
     {
-        PetscCall(UpdateAnalytical(p_info, (p_vars -> c_j).arr, (p_vars -> c_jm1).arr, p_user));
+        PetscCall(UpdateAnalytical(p_info, (p_vars -> a_j).arr, (p_vars -> a_jm1).arr, p_user));
         PetscCall(VecCopy((p_vars -> W_j).vec, p_vars -> error));
-        PetscCall(VecAXPY(p_vars -> error,-1.0,(p_vars -> c_j).vec));    // W_j <- W_j - c_j
+        PetscCall(VecAXPY(p_vars -> error,-1.0,(p_vars -> a_j).vec));    // W_j <- W_j - a_j
         PetscCall(VecNorm(p_vars -> error,NORM_INFINITY,&errnorm_j));
         if (errnorm_j > (p_user -> errnorm_all))   (p_user -> errnorm_all) = errnorm_j;
-        PetscCall(VecCopy((p_vars -> c_j).vec,(p_vars->c_jm1).vec));
+        PetscCall(VecCopy((p_vars -> a_j).vec,(p_vars->a_jm1).vec));
     }
     if (p_user -> make_movie && (p_user -> j % p_user -> movie_step_interval == 0))
     {
@@ -66,8 +66,8 @@ PetscErrorCode simulate(DM da, SNES   snes, DMDALocalInfo *p_info, AppCtx *p_use
     PetscCall(DMDAGetLocalInfo(da,p_info));
     p_user -> dx = 1.0 / (p_info -> mx - 1); /* TODO: should set this before simulate*/
     PetscCall(InitializeVecAndArray(da, &(vars.W_j)));
-    PetscCall(InitializeVecAndArray(da, &(vars.c_j)));
-    PetscCall(InitializeVecAndArray(da, &(vars.c_jm1)));
+    PetscCall(InitializeVecAndArray(da, &(vars.a_j)));
+    PetscCall(InitializeVecAndArray(da, &(vars.a_jm1)));
     PetscCall(VecDuplicate(vars.W_j.vec,&vars.error));
 
     // set initial guess
@@ -100,8 +100,8 @@ PetscErrorCode simulate(DM da, SNES   snes, DMDALocalInfo *p_info, AppCtx *p_use
     PetscPrintf(PETSC_COMM_WORLD, "\n");
 
     PetscCall(DestroyVecAndArray(da, &(vars.W_j)));
-    PetscCall(DestroyVecAndArray(da, &(vars.c_j)));
-    PetscCall(DestroyVecAndArray(da, &(vars.c_jm1)));
+    PetscCall(DestroyVecAndArray(da, &(vars.a_j)));
+    PetscCall(DestroyVecAndArray(da, &(vars.a_jm1)));
     PetscCall(VecDestroy(&vars.error));
     if (p_user->make_movie)
     {
@@ -163,8 +163,8 @@ PetscErrorCode run(
 } // end of run()
 
 PetscErrorCode UpdateAnalytical(
-  DMDALocalInfo *info, PetscReal *c_j, 
-  PetscReal *c_jm1, AppCtx *user
+  DMDALocalInfo *info, PetscReal *a_j, 
+  PetscReal *a_jm1, AppCtx *user
 ) {
     PetscInt   i;
     double X, T_j, T_jm1, dX;
@@ -175,7 +175,7 @@ PetscErrorCode UpdateAnalytical(
         for (i=info->xs; i<info->xs+info->xm; i++)
         {
             X = (double) i*dX;
-            c_j[i] = exp_I0(0., X);
+            a_j[i] = exp_I0(0., X);
         }
     }
     else
@@ -188,7 +188,7 @@ PetscErrorCode UpdateAnalytical(
         {
             X = (double) i*dX;
             tmp = (PetscReal) exp_I0(T_j, X) - exp_I0(T_jm1, X) + integrate(T_jm1, T_j, X);
-            c_j[i] = c_jm1[i] + tmp;
+            a_j[i] = a_jm1[i] + tmp;
         }
     }
 

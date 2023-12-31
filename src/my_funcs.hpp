@@ -6,6 +6,9 @@
  *  @author Robert F. DeJaco
  */
 
+#ifndef MY_FUNCS
+#define MY_FUNCS
+
 /** @brief Calculate exponential term involving bessel function
  *  
  *  Evaluates \f$e^{-z-T}I_0(2\sqrt{zT})\f$, where \f$I_0\f$ is the modified Bessel function of zeroth order. 
@@ -31,7 +34,7 @@ double integrate(double T_jm1, double T_j, double z);
 /** @brief Updates solution from previous time step
  *
  *  @param c_j new solution at time j
- *  @param c_jm1 old solution at time j-1
+ *  @param a_jm1 old solution at time j-1
  *  @param T_j current/new value of time
  *  @param T_jm1 previous value of time 
  *  @param X distance along column
@@ -40,7 +43,7 @@ double integrate(double T_jm1, double T_j, double z);
  *
  *  \warning{not tested, probably uses wrong value of n}
  */
-double update_solution(double *c_j, double *c_jm1, double T_jm1, double T_j, double *X, int n);
+double update_solution(double *c_j, double *a_jm1, double T_jm1, double T_j, double *X, int n);
 
 /** @brief Provides analytical break-through curve
  *
@@ -52,3 +55,5 @@ double update_solution(double *c_j, double *c_jm1, double T_jm1, double T_j, dou
  *  @return void
  */
 void analytical_btc(double *, double *, double X, int);
+
+#endif

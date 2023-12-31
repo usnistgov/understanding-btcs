@@ -9,8 +9,6 @@
 #ifndef ISOTHERM 
 #define ISOTHERM
 
-/* Constant R in m**3*Pa/mol/K */
-#define R 8.31446261815324
 #include <petsc.h>
 
 /** @brief F
@@ -73,37 +71,5 @@ double dF_langmuir_dimensionless(double c, int num_params, double *params, doubl
  *  
  */
 void initialize_langmuir_dimensionless(ISO *langmuir, double kappa);
-
-/** @struct isotherm adata
- */
-typedef struct {
-    double *c_star; /*!< scaled fluid concentration */
-    double *f_star; /*!< scaled solid concentration */
-    int n; /*!< number of points*/
-    double c_scale; /*!< scale factor for concentration, multiplying c_scale by c_star gives units of mol/m3*/
-    double f_scale; /*!< scale factor for loading, multiplying f_scale by f_star gives units of mol/m3*/
-} EXP_ISO;
-
-
-/** @brief isotherm function for linear interpolation 
- *
- */
-double F_li(double c, int n, double *cs, double *fs);
-
-/** @brief Derivative of isotherm function for linear interpolation 
- *
- */
-double dF_li(double c, int n, double *cs, double *fs);
-
-/** @brief free li after stored 
- */
-void free_li(ISO *iso);
-
-void initialize_li(
-    ISO *iso,  /**< [out] dimensionless iso for pde*/
-    EXP_ISO exp_iso, /**< [in] experimental isotherm data*/
-    PetscReal c_f, /**< [in] feed concentration mol/m3 exp */
-    PetscReal *f_f /**< [out] feed equil solid concentration mol/m3 exp */
-);
 
 #endif // !HEADER_FILE
