@@ -69,7 +69,7 @@ def main():
     T_plotted = []
     for ax, iso, i in ((ax_movie1, iso1, 0), (ax_movie2, iso2, 1), (ax_movie3, iso3, 2)):
         for j in range(0, m, m//10):
-            W_j = np.loadtxt("movie-%2.1f/movie-%i.txt" % (iso.k, j), skiprows=2)
+            W_j = np.loadtxt("out/movie-%2.1f/movie-%i.txt" % (iso.k, j), skiprows=2)
             ax.plot(x/e, W_j, color=colors[j])
             if i == 0:
                 colors_plotted.append(colors[j])
