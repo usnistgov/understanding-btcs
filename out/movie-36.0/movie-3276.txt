@@ -1,4 +1,4 @@
-Vec Object: Vec_0x55c3e49969c0_0 1 MPI process
+Vec Object: Vec_0x3_0 1 MPI process
   type: seq
 1.
 0.999826
