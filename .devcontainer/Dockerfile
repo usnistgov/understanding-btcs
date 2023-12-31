@@ -1,9 +1,6 @@
-FROM rfd1/cms1-latex:latest
+FROM rfd1/understanding-btcs:final
 
 USER root
-
-RUN cd /home/&& git clone -b v3.19.0 https://gitlab.com/petsc/petsc.git petsc \
-    && cd petsc && ./configure && make PETSC_DIR=/home/petsc PETSC_ARCH=arch-linux-c-debug all
 
 ARG USERNAME=vscode
 ARG USER_UID=1000

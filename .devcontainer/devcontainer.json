@@ -1,5 +1,5 @@
 {
-	"name": "Workspace for btcs",
+	"name": "Workspace for understanding-btcs",
 	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
 	"dockerComposeFile": "docker-compose.yml",
 	// The 'service' property is the name of the service for the container that VS Code should
@@ -9,9 +9,24 @@
 	// connected. This is typically a volume mount in .devcontainer/docker-compose.yml
 	"workspaceFolder": "/workspace-btc-cnsns",
 	// Set *default* container specific settings.json values on container create.
-	"settings": {},
+	"settings": {
+		"files.eol": "\n",
+        "files.associations": {
+            "*.tex": "latex",
+            "*.h": "c",
+            "*.c": "c"
+        },
+        "files.autoSave": "onFocusChange",
+        "autoDocstring.docstringFormat": "numpy",
+        "workbench.editor.enablePreview": false,
+	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
+		"ms-vscode.cpptools-extension-pack",
+		"ms-azuretools.vscode-docker",
+		"ms-python.python",
+		"ms-vscode.makefile-tools",
+		"tdennis4496.cmantic"
 	],
 	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
 	// "shutdownAction": "none",
