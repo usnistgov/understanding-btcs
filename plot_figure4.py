@@ -4,7 +4,7 @@ plt.rcParams.update({
     "text.usetex": True,
     "font.family": "Helvetica"
 })
-plt.rc("text.latex", preamble="\\usepackage{amsmath} \\usepackage{amsfonts}")
+plt.rc("text.latex", preamble="\\usepackage{amsmath} \\usepackage{amsfonts} \\usepackage{euscript}")
 
 
 if __name__ == '__main__':
@@ -30,7 +30,7 @@ if __name__ == '__main__':
         axes[i].spines['right'].set_visible(False)
         axes[i].grid()
     
-    axes[1].set_ylabel("$\\overline{\\mathcal{E}}_N$", rotation=0., labelpad=12)
+    axes[1].set_ylabel("$\\overline{\\EuScript{E}}_N$", rotation=0., labelpad=12)
     for i in range(tw.es.shape[0]):
         axes[0].annotate("$\\varepsilon = %3.2f$" % tw.es[i], 
         xy=(0.03, 0.4 + 0.1*i), xycoords="axes fraction", color=tw.colors[i])
