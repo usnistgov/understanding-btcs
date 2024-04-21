@@ -41,7 +41,7 @@ To cite the manuscript, use Ref. [1]. To cite the software or data generated, us
 
 ## References
 
-  1. DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Single-Solute Breakthrough Curves, *Communications in Nonlinear Science and Numerical Simulation*, 2023, [doi: 10.1016/j.cnsns.2023.107794](https://doi.org/10.1016/j.cnsns.2023.107794).
+  1. DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Single-Solute Breakthrough Curves, *Communications in Nonlinear Science and Numerical Simulation*, Volume 131, 2024, 107794, ISSN 1007-5704, [doi: 10.1016/j.cnsns.2023.107794](https://doi.org/10.1016/j.cnsns.2023.107794).
 
   2. De Jaco, R. F. Sofware and Data Associated with "DeJaco, R. F.; Kearsley, A. J. Understanding Fast Adsorption in Breakthrough-curve Measurements." National Institute of Standards and Technology, 2023, [doi: 10.18434/mds2-3103](https://doi.org/10.18434/mds2-3103).
 
